@@ -1,0 +1,25 @@
+services:
+  nginx:
+    image: ziomber/nginx-vts:1.29.1-bookworm
+    container_name: nginx-vts
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - ./nginx:/etc/nginx
+      - ./letsencrypt:/etc/letsencrypt
+      - ./logs:/var/log/nginx
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    stop_grace_period: 30s
+
+networks:
+  default:
+    name: nginx
+

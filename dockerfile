@@ -1,4 +1,5 @@
 ARG NGINX_VERSION=1.29.3
+ARG NGINX_CODE=trixie
 
 FROM debian:bookworm-slim AS builder
 ARG NGINX_VERSION
@@ -21,7 +22,7 @@ RUN ./configure \
       --add-dynamic-module=/tmp/nginx-module-vts \
  && make modules
 
-FROM nginx:${NGINX_VERSION}-bookworm
+FROM nginx:${NGINX_VERSION}-${NGINX_CODE}
 ARG NGINX_VERSION
 
 RUN apt-get update && apt-get install -y --no-install-recommends \

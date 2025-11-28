@@ -51,7 +51,6 @@ RUN chmod +x /usr/local/bin/renew.sh \
  && printf '0 3,15 * * * root /usr/local/bin/renew.sh >/var/log/nginx/certbot-renew.log 2>&1\n' >> /etc/cron.d/certbot \
  && chmod 0644 /etc/cron.d/certbot
 
-
 COPY scripts/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

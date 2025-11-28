@@ -25,8 +25,9 @@ RUN ./configure \
 FROM nginx:${NGINX_VERSION}-${NGINX_CODE}
 ARG NGINX_VERSION
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-      python3 certbot python3-certbot-nginx cron iproute2 logrotate \
+RUN apt-get update \
+	&& apt-get full-upgrade -y \
+	&& apt-get install -y --no-install-recommends python3 certbot python3-certbot-nginx cron iproute2 logrotate \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /tmp/nginx-${NGINX_VERSION}/objs/ngx_http_vhost_traffic_status_module.so /etc/nginx/modules/

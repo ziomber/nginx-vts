@@ -36,26 +36,8 @@ VOLUME ["/etc/nginx", "/var/log/nginx", "/etc/letsencrypt"]
 ########################
 # logrotate dla nginx
 ########################
-# - daily
-# - with compression
-# - date in filename
 
-RUN cat > /etc/logrotate.d/nginx << 'EOF'
-/var/log/nginx/*.log {
-    daily
-    missingok
-    compress
-    delaycompress
-    notifempty
-    create 0640 root adm
-    sharedscripts
-    dateext
-    dateformat -%Y%m%d
-    postrotate
-        [ -s /var/run/nginx.pid ] && kill -USR1 "$(cat /var/run/nginx.pid)"
-    endscript
-}
-EOF
+COPY logrotate-nginx.conf /etc/logrotate.d/nginx
 
 ########################
 # certbot cron
